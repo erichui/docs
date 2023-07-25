@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-8daa1a0e","path":"/","title":"","lang":"zh-CN","frontmatter":{"home":true,"heroImage":"/image/avatar.jpg","heroText":"首页的大标题","tagline":"首页的标语"},"headers":[],"git":{"updatedTime":1690204502000,"contributors":[{"name":"gaohui.eric","email":"gaohui.eric@bytedance.com","commits":1}]},"filePathRelative":"README.md"}');export{e as data};
