@@ -2,6 +2,7 @@ import { defineUserConfig, defaultTheme } from 'vuepress'
 
 export default defineUserConfig({
   lang: 'zh-CN',
+  base: '/docs/',
   title: 'erichui',
   description: '',
   theme: defaultTheme({
@@ -11,7 +12,7 @@ export default defineUserConfig({
         link: '/',
       },
       {
-        text: '播客',
+        text: '博客',
         link: '/gc/',
       },
       {
