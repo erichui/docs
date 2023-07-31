@@ -14,7 +14,7 @@ const fn = () => {
 };
 ```
 
-![未命名文件.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4cb52122-3fe5-433d-b3eb-826dafb2b3cf/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E4%BB%B6.png)
+![stack-heap.png](stack-heap.png)
 
 ### 栈内存垃圾回收
 

@@ -1,7 +1,6 @@
 ---
 home: true
 heroImage: /image/avatar.jpg
-# heroHeight: 100
 heroText: '首页的大标题'
 tagline: '首页的标语'
 # actions:
