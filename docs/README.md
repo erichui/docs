@@ -1,22 +1,24 @@
 ---
 home: true
+title: 首页
 heroImage: /image/avatar.jpg
-heroText: '首页的大标题'
-tagline: '首页的标语'
-# actions:
-#   - text: 快速上手
-#     link: /zh/guide/getting-started.html
-#     type: primary
-#   - text: 项目简介
-#     link: /guide/
-#     type: secondary
-# features:
-#   - title: 简洁至上
-#     details: 以 Markdown 为中心的项目结构，以最少的配置帮助你专注于写作。
-#   - title: Vue 驱动
-#     details: 享受 Vue 的开发体验，可以在 Markdown 中使用 Vue 组件，又可以使用 Vue 来开发自定义主题。
-#   - title: 高性能
-#     details: VuePress 会为每个页面预渲染生成静态的 HTML，同时，每个页面被加载的时候，将作为 SPA 运行。
+heroText: 'erichui'
+tagline: '一个前端 争取每天学习一点点'
+actions:
+  - text: 前端
+    link: /frontend/browser/gc/index.html
+    type: primary
+  - text: 面试整理
+    link: /interview/placeholder.html
+    type: secondary
+  - text: 服务端
+    link: /server/rust/rust-issue.html
+    type: secondary
+features:
+  - title: 前端
+    details: JS、TS、Vue、React
+  - title: 面试整理
+    details: 面试题目收集和梳理
+  - title: 服务端
+    details: Node、Rust、Go、数据库
 ---
-
-<!-- # Hello VuePress -->
