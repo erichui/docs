@@ -53,6 +53,7 @@ export default defineUserConfig({
           text: '浏览器相关',
           children: [
             '/frontend/browser/DNS/',
+            '/frontend/browser/HTTP/',
             '/frontend/browser/gc/',
           ],
         },
