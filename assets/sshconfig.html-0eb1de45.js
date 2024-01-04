@@ -1,0 +1,1 @@
+const t=JSON.parse('{"key":"v-ad3ed0a6","path":"/frontend/javascript/sshconfig.html","title":"SSH 配置说明","lang":"zh-CN","frontmatter":{},"headers":[],"git":{"updatedTime":1703657408000,"contributors":[{"name":"erichui","email":"erichui0906@163.com","commits":1}]},"filePathRelative":"frontend/javascript/sshconfig.md"}');export{t as data};
