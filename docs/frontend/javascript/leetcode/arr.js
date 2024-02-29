@@ -95,15 +95,13 @@ function intersect(nums1 = [], nums2 = []) {
   // map 保存每个 num 出现的次数
   const map = new Map();
   for(let i = 0; i < nums1.length; i++) {
-    const val = map.get(nums1[i]);
-    map.set(nums1[i], val ? val + 1 : 1);
+    map.set(nums1[i], map.has(nums1[i]) ? map.get(nums1[i]) + 1 : 1);
   }
   const res = [];
   for (let i = 0; i< nums2.length; i++) {
-    const val = map.get(nums2[i]);
-    if (val) {
+    if (map.has(nums2[i])) {
       res.push(nums2[i]);
-      map.set(nums2[i], val - 1);
+      map.set(nums2[i], map.get(nums2[i]) - 1);
     }
   }
   return res;
@@ -188,7 +186,7 @@ function MIStack(arr = []) {
   const stack = [];
   for (let item of arr) {
     // 当前元素大于栈顶元素时 栈内较小的元素需要出栈
-    while (stack.length > 0 && item > stack[stack.length - 1]) {
+    while (stack.length > 0 && stack[stack.length - 1] < item) {
       stack.pop();
     }
     stack.push(item);
@@ -238,6 +236,7 @@ function rightFirstMax(arr = []) {
     }
     stack.push(item);
   }
+  // 注意处理未出栈的元素
   for (const stackItem of stack) {
     map.set(stackItem, -1);
   }

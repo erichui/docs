@@ -16,10 +16,26 @@
 ### HTTP/1.0
 相较于上个版本，主要新增了以下几个功能：
 - 新增了 ``POST`` 和 ``HEAD``命令，丰富了客户端和服务器的交互方式
-- 
+- ``Expire`` 强缓存  绝对时间
 
 ### HTTP/1.1
+
+- ``Catch-Control`` 强缓存  max-age 字段 相对时间
+- 协商缓存：
+  - Last-Modify If-Modify-Since
+  - Etag If-None-Match
 
 ### HTTP/2
 
 ### HTTP/3
+
+
+强缓存 本地缓存有效 不需要向服务器发起请求
+- Cache-Control 较之 Expires 更为精准。
+- Cache-Control 优先级大于 Expires。
+- Expires 浏览器兼容性更好，当有不支持 Cache-Control 的浏览器时会以 Expires 为准。
+
+协商缓存 本地缓存失效 需要向服务器发起请求验证缓存资源是否还可用
+- 精确度 ETag > Last-Modified。ETag 是通过内容生成hash，而 Last-Modified不一样，在某些场景下准确度会失效。（例如编辑文件，但是文件内容未变，缓存会失效）
+- 性能 Last-Modified > ETag。Last-Modified 仅仅记录一个时间点，而 ETag需要根据文件的具体内容生成哈希值，相对来说会慢。
+- 缓存有效 返回 304 状态吗  无效返回 200 状态吗

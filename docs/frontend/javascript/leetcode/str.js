@@ -20,8 +20,6 @@ function addStrings(num1 = '', num2 = '') {
   return ret;
 }
 
-console.log(addStrings('1', '9'));
-
 /**
  * 有效的括号
  * 
@@ -34,10 +32,11 @@ console.log(addStrings('1', '9'));
 function isValid(strs = '') {
   if (strs.length % 2 !== 0) return false;
   const stack = [];
-  const map = new Map();
-  map.set('(', ')');
-  map.set('{', '}');
-  map.set('[', ']');
+  const map = new Map([
+    ['(', ')'],
+    ['{', '}'],
+    ['[', ']'],
+  ]);
   for (let s of strs) {
     if (map.get(stack[stack.length - 1]) === s) {
       stack.pop();
@@ -104,67 +103,110 @@ function calculate(str) {
         break;
     }
     preOpe = str[i]; // 更新操作符
-    num = ''; // 充值当前值
+    num = ''; // 重置当前值
   }
   return stack.reduce((pre, cur) => {
     return pre + cur;
   }, 0)
 }
-function calculate(s) {
-  // 如果当前字符是'+'，将后面的数字，push到stack中
-  // 如果当前字符是'-'，将后面的数字的负数，push到stack中
-  // 如果当前字符是'*'，将后面的数字与栈顶数字相乘后的结果，更新栈顶元素
-  // 如果当前字符是'/'，将后面的数字与栈顶数字相除并向下取整后的结果，更新栈顶元素
-  // 最后再遍历stack，将所有数字相加，得到答案
-  const stack = [];
-  let ans: number = 0;
-  let cur: number = 0;
-  let prevOpe: string = "+";
-  for (let i = 0; i < s.length; ) {
-    while (s[i] === " ") {
-      i++;
+
+/**
+ * 最长公共前缀
+ * 字符串数组的最长公共前缀
+ */
+function findCommonPrefix(strs = []) {
+  // 暴力 双重循环
+  // let str = '';
+  // const firstStr = strs[0];
+  // const length = firstStr.length;
+  // for (let j = 0; j < length; j++) {
+  //   const _str = str + firstStr[j];
+  //   for (let i = 1; i < strs.length; i++) {
+  //     if (!strs[i].startsWith(_str)) {
+  //       return str;
+  //     }
+  //   }
+  //   str = _str;
+  // }
+  // return str;
+
+  /**
+   * 先对字符串数组进行排序（字母顺序）
+   * 然后遍历第一个元素 只需要对比收尾两个字符串对应位置即可
+   */
+  strs = strs.sort();
+  let str = '';
+  const firstStr = strs[0];
+  for (let i = 0; i < firstStr.length; i++) {
+    if (firstStr[i] === strs[strs.length - 1][i]) {
+      str += firstStr[i];
+    } else {
+      break;
     }
-    while (
-      !(
-        s[i] === "+" ||
-        s[i] === "-" ||
-        s[i] === "*" ||
-        s[i] === "/" ||
-        s[i] === " "
-      ) &&
-      i < s.length
-    ) {
-      cur = cur * 10 + (s[i].charCodeAt(0) - "0".charCodeAt(0));
-      i++;
-    }
-    switch (prevOpe) {
-      case "+":
-        stack.push(cur);
-        break;
-      case "-":
-        stack.push(-cur);
-        break;
-      case "*":
-        stack.push((stack.pop() || 0) * cur);
-        break;
-      case "/":
-        // 题目要求只保留整数部分
-        // 正数: 向下取整
-        // 负数: 向上取整
-        const temp = (stack.pop() || 0) / cur;
-        stack.push(temp > 0 ? Math.floor(temp) : Math.ceil(temp));
-        break;
-      default:
-    }
-    prevOpe = s[i];
-    i++;
-    cur = 0;
   }
-  // 再遍历一次，把所有数字相加，得到答案
-  for (const n of stack) {
-    ans += n;
-  }
-  return ans;
+  return str;
 }
 
-console.log(calculate("35+21*2"), 'calculate');
+/**
+ * 字符串解码
+ * 
+ * 给定一个经过编码的字符串，返回它解码后的字符串。
+
+编码规则为: k[encoded_string]，表示其中方括号内部的 encoded_string 正好重复 k 次。注意 k 保证为正整数。
+
+你可以认为输入字符串总是有效的；输入字符串中没有额外的空格，且输入的方括号总是符合格式要求的。
+
+此外，你可以认为原始数据不包含数字，所有的数字只表示重复的次数 k ，例如不会出现像 3a 或 2[4] 的输入。
+ * 样例输入：s = "3[a2[c]]"
+样例输出：accaccacc
+
+输入：s = "2[abc]3[cd]ef"
+输出："abcabccdcdcdef"
+
+输入：s = "abc3[cd]xyz"
+输出："abccdcdcdxyz"
+ */
+// "3[a]2[bc]"
+// "3[a2[c]]"
+/**
+ * 
+如果当前的字符为数位，解析出一个数字（连续的多个数位）并进栈
+如果当前的字符为字母或者左括号，直接进栈
+如果当前的字符为右括号，开始出栈，一直到左括号出栈，出栈序列反转后拼接成一个字符串，此时取出栈顶的数字（此时栈顶一定是数字，想想为什么？），
+就是这个字符串应该出现的次数，我们根据这个次数和字符串构造出新的字符串并进栈
+ */
+
+function decodeString(str) {
+  let ret = '';
+  const stack = [];
+  let i = 0;
+  while (i < str.length) {
+    if (str[i] > 0) {
+      const num = stack.pop() ?? 0;
+      stack.push(num * 10 + str[i]);
+    } else if (str[i] !== ']') {
+      stack.push(str[i]);
+    } else {
+      let _str = '';
+      while(stack.length && stack[stack.length - 1] !== '[') {
+        _str = stack.pop() + _str;
+      }
+      stack.pop();
+      let repeatCount = 0;
+      while(stack.length && Number(stack[stack.length - 1]) > 0) {
+        repeatCount = Number(stack.pop() ?? 0) +  repeatCount * 10; 
+      }
+      console.log(repeatCount, ret);
+      const repeatStr = ret;
+      while (repeatCount > 1) {
+        ret += repeatStr;
+        repeatCount--;
+      }
+      console.log(ret, repeatCount)
+    }
+    i++;
+  }
+  return ret;
+}
+
+console.log(decodeString('3[a]2[bc]'), 'decodeString');
