@@ -254,34 +254,40 @@ function miniDepth(root) {
  * 对称二叉树
  * 给你一个二叉树的根节点 root ， 检查它是否轴对称。
  * [1,2,2,null,3,null,3]
- *      1
- *    2   2
- *      3   3
- * 2 3 1 2 3
  */
 function isSymmetric(root) {
-  const ret = [];
-  function inorder(node) {
-    if (node === null) return;
-    inorder(node.left);
-    ret.push(node.val);
-    inorder(node.right);
+  if (root === null || (root.left === null && root.right === null)) return true;
+  // 递归
+  // function check(left, right) {
+  //   if (!left && !right) return true;
+
+  //   if (!left && right) return false;
+  //   if (left && !right) return false;
+  //   if (left.val !== right.val) return false;
+  //   return check(left.left, right.right) && check(left.right, right.left);
+  // }
+  // return check(root.left, root.right);
+  /**
+   * 迭代
+   */
+  const queue = [root.left, root.right];
+  while(queue.length > 0) {
+    const tree1 = queue.shift();
+    const tree2 = queue.shift();
+    if (!tree1 && !tree2) continue;
+    if (!tree1 && tree2) return false;
+    if (tree1 && !tree2) return false;
+    if (tree1.val !== tree2.val) return false;
+    queue.push(tree1.left);
+    queue.push(tree2.right);
+
+    queue.push(tree1.right);
+    queue.push(tree2.left);
   }
-  inorder(root);
-  if (ret.length % 2 === 0) return false;
-  console.log(ret, root);
-  return root.val === ret[Math.floor(ret.length / 2)];
+  return true;
 };
 
-console.log(isSymmetric(array2Tree([1,2,2,null,3,null,3])), 'isSymmetric');
-const check = (p: TreeNode | null, q: TreeNode | null): boolean => {
-  if (!p && !q) return true;
-  if (!p || !q) return false;
-  return p.val === q.val && check(p.left, q.right) && check(p.right, q.left);
-}
-var isSymmetric = function(root: TreeNode | null): boolean {
-  return check(root, root);
-};
+
 /**
  * 最大二叉树
  * 输入：root = [1,2,2,3,4,4,3]
@@ -306,21 +312,20 @@ var isSymmetric = function(root: TreeNode | null): boolean {
  */
 
 function constructMaximumBinaryTree(nums){
-  return build(nums, 0, nums.length - 1)
+  // 递归
+  function maxTree(nums = [], left, right) {
+    if (left > right) return 0;
+    let maxIndex = left;
+    for (let i = left + 1; i <= right; i++) {
+      if (nums[i] > nums[maxIndex]) maxIndex = i;
+    }
+    const node = new TreeNode(nums[maxIndex]);
+    node.left = maxTree(nums, left, maxIndex - 1);
+    node.right = maxTree(nums, maxIndex + 1, right);
+    return node;
+  };
+  return maxTree(nums, 0, nums.length - 1);
 };
-
-// 递归分治  时间复杂度 O(n^2) 空间复杂度 O(1)
-function build(nums = [], left = 0, right = 0) {
-  if (left > right) return null; // 注意递归终结条件
-  let maxIndex = left;
-  for (let i = left + 1; i <= right; i++) {
-    if (nums[i] > nums[maxIndex]) maxIndex = i;
-  }
-  const head = new TreeNode(nums[maxIndex])
-  head.left = build(nums, left, maxIndex - 1);
-  head.right = build(nums, maxIndex + 1, right);
-  return head;
-}
 
 /**
  * 
