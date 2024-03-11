@@ -29,7 +29,7 @@ function copy(target) {
       ? []
       : {};
     for (const key in target) {
-      if (Object.prototype.hasOwnProperty.call(ret, key)) {
+      if (Object.prototype.hasOwnProperty.call(target, key)) {
         ret[key] = copy(target[key]);
       }
     }

@@ -171,6 +171,58 @@ function twoSum(nums = [], target) {
   }
 };
 
+/**
+ * 给你一个整数数组 nums ，判断是否存在三元组 [nums[i], nums[j], nums[k]] 满足 i != j、i != k 且 j != k ，同时还满足 nums[i] + nums[j] + nums[k] == 0 。请
+
+你返回所有和为 0 且不重复的三元组。
+
+注意：答案中不可以包含重复的三元组。
+输入：nums = [-1,0,1,2,-1,-4]
+输出：[[-1,-1,2],[-1,0,1]]
+
+输入：nums = [0,1,1]
+输出：[]
+
+
+[-1,0,1,2,-1,-4]
+[[-1,0,1],[0,1,-1]]
+
+[[-1,-1,2],[-1,0,1]]
+ */
+function threeSum(nums) {
+  const result = [];
+  const sortedNums = nums.sort((a, b) => a - b);
+  for (let i = 0; i < nums.length; i++) {
+    const a = sortedNums[i];
+    // 数组排过序，如果第一个数大于0直接返回res
+    if (a > 0) return result;
+    let left = i + 1;
+    let right = sortedNums.length - 1;
+    // 去重
+    if (a === sortedNums[i - 1]) continue;
+    while(left < right) {
+      const sum = a + sortedNums[left] + sortedNums[right];
+      if (sum === 0) {
+        result.push([a, sortedNums[left], sortedNums[right]]);
+        // 去重
+        while (left < right && sortedNums[left] === sortedNums[left + 1]) {
+          left++
+        }
+        while (left < right && sortedNums[right] === sortedNums[right - 1]) {
+          right--;
+        }
+        left++;
+        right--;
+      } else if (sum > 0) {
+        right--;
+      } else {
+        left ++;
+      }
+    }
+  }
+  return result;
+}
+
 
 
 
@@ -307,3 +359,34 @@ function nextGreaterElement(nums1, nums2) {
   }
   return nums1.map(_item => map.get(_item));
 };
+
+/**
+ * 给你一个整数数组 nums ，请你找出一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
+子数组
+是数组中的一个连续部分。
+
+输入：nums = [-2,1,-3,4,-1,2,1,-5,4]
+输出：6
+解释：连续子数组 [4,-1,2,1] 的和最大，为 6 。
+
+由于子数组的元素和等于两个前缀和的差，所以求出 nums\textit{nums}nums 的前缀和，问题就变成 121. 买卖股票的最佳时机 了。本题子数组不能为空，相当于一定要交易一次。
+
+我们可以一边遍历数组计算前缀和，一边维护前缀和的最小值（相当于股票最低价格），用当前的前缀和（卖出价格）减去前缀和的最小值（买入价格），就得到了以当前元素结尾的子数组和的最大值（利润），用它来更新答案的最大值（最大利润）。
+
+请注意，由于题目要求子数组不能为空，应当先计算前缀和-最小前缀和，再更新最小前缀和。相当于不能在同一天买入股票又卖出股票。
+
+如果先更新最小前缀和，再计算前缀和-最小前缀和，就会把空数组的元素和 000 算入答案。
+
+ */
+
+function (nums) {
+  let res = -100001;
+  let preSum = 0;
+  let minPreSum = 0;
+  for (let i = 0; i < nums.length; i++) {
+    preSum += nums[i];
+    res = Math.max(res, preSum - minPreSum);
+    minPreSum = Math.min(minPreSum, preSum);
+  }
+  return res;
+}

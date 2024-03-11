@@ -62,5 +62,5 @@ type MyPick<T, K extends keyof T> = {
  */
 type MyOmit<T, K extends keyof any> = MyPick<T,  MyExclude<keyof T, K>>; // 借助上述的 Pick Exclude 实现
 type MyOmit1<T, K extends keyof T> = {
-  [P in keyof T as P extends K ? never: P] :T[P]
+  [P in keyof T as P extends K ? never : P] :T[P]
 }
