@@ -1,0 +1,1 @@
+const t=JSON.parse('{"key":"v-269f5680","path":"/frontend/typescript/normal-issue.html","title":"Typescript 常见问题","lang":"zh-CN","frontmatter":{},"headers":[],"git":{"updatedTime":1695732862000,"contributors":[{"name":"erichui","email":"erichui0906@163.com","commits":1}]},"filePathRelative":"frontend/typescript/normal-issue.md"}');export{t as data};

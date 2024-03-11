@@ -1,0 +1,1 @@
+import{_ as a,o as t,c,a as e,b as o}from"./app-65bcf5b2.js";const r={},s=e("h1",{id:"面试整理",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#面试整理","aria-hidden":"true"},"#"),o(" 面试整理")],-1),n=[s];function _(d,l){return t(),c("div",null,n)}const i=a(r,[["render",_],["__file","placeholder.html.vue"]]);export{i as default};
